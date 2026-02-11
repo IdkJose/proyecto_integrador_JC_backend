@@ -16,11 +16,13 @@ class CategoryService(
     private val categoryRepository: CategoryRepository
 ) {
 
+    // Obtener todas las categorías para listarlas en la app
     @Transactional(readOnly = true)
     fun getAllCategories(): List<CategoryResponse> {
         return categoryRepository.findAll().map { it.toResponse() }
     }
 
+    // Obtener detalle de una categoría (incluyendo sus actividades)
     @Transactional(readOnly = true)
     fun getCategoryById(id: Long): CategoryWithActivitiesResponse {
         val category = categoryRepository.findById(id)
@@ -40,9 +42,11 @@ class CategoryService(
         val existing = categoryRepository.findById(id)
             .orElseThrow { EntityNotFoundException("Category not found with id: $id") }
         
+        // Actualizamos los campos de la entidad existente
         existing.name = request.name
         existing.description = request.description
         
+        // JPA detecta cambios y ejecuta el UPDATE sql
         val updated = categoryRepository.save(existing)
         return updated.toResponse()
     }

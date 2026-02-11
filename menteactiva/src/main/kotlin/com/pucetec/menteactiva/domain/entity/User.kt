@@ -4,6 +4,7 @@ import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 
+// Usamos 'class' normal (no 'data class') para que JPA maneje correctamente las entidades mutables
 @Entity
 @Table(name = "users")
 class User(
@@ -11,19 +12,20 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @field:NotBlank(message = "Email is required")
-    @field:Email(message = "Email should be valid")
+    @field:NotBlank(message = "El email es requerido")
+    @field:Email(message = "El email debe ser válido")
     @Column(nullable = false, unique = true)
     var email: String = "",
 
-    @field:NotBlank(message = "Password is required")
+    @field:NotBlank(message = "La contraseña es requerida")
     @Column(nullable = false)
-    var password: String = "", // En un caso real esto se encriptaría, pero para clase lo dejaremos plano para que sea fácil de explicar.
+    var password: String = "", // Guardamos el hash encriptado, no la contraseña plana
 
-    @field:NotBlank(message = "Display name is required")
+    @field:NotBlank(message = "El nombre es requerido")
     @Column(name = "display_name", nullable = false)
     var displayName: String = ""
 ) {
+    // Implementación correcta de equals y hashCode para entidades JPA
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false

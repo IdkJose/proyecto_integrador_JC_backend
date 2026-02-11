@@ -66,7 +66,9 @@ data class QuestionResponse(
     val activityId: Long
 )
 
-// --- Auth DTOs ---
+// --- Auth DTOs (Data Transfer Objects) ---
+// Usamos DTOs para definir qué datos esperamos recibir del Frontend y qué respondemos.
+
 data class LoginRequest(
     @field:NotBlank(message = "Email is required")
     @field:Email
@@ -88,11 +90,13 @@ data class RegisterRequest(
     val displayName: String
 )
 
+// Usado para endpoints que solo actualizan el perfil
 data class UpdateUserRequest(
     @field:NotBlank(message = "Name is required")
     val displayName: String
 )
 
+// Lo que enviamos de vuelta al frontend (nunca devolver la contraseña)
 data class UserResponse(
     val id: Long,
     val email: String,

@@ -16,6 +16,7 @@ class QuestionService(
     private val activityRepository: ActivityRepository
 ) {
 
+    // Obtiene las preguntas asociadas a una actividad (para el Quiz)
     @Transactional(readOnly = true)
     fun getQuestionsByActivityId(activityId: Long): List<QuestionResponse> {
         if (!activityRepository.existsById(activityId)) {

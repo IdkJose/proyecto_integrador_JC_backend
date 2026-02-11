@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface QuestionRepository : JpaRepository<Question, Long> {
+    // Recupera todas las preguntas de una actividad específica
+    // SELECT * FROM question WHERE activity_id = ?
     fun findByActivityId(activityId: Long): List<Question>
 }

@@ -7,11 +7,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class WebConfig : WebMvcConfigurer {
 
+    // Configuración de CORS (Cross-Origin Resource Sharing)
+    // Permite que el Frontend (React/Ionic) se comunique con este Backend aunque estén en puertos diferentes.
     override fun addCorsMappings(registry: CorsRegistry) {
-        registry.addMapping("/**")
-            .allowedOriginPatterns("*") // Use allowedOriginPatterns instead of allowedOrigins for flexibility
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
-            .allowedHeaders("*")
-            .allowCredentials(true)
+        registry.addMapping("/**") // Aplica a todas las rutas de la API
+            .allowedOriginPatterns("*") // Permite cualquier origen (para desarrollo)
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD") // Métodos HTTP permitidos
+            .allowedHeaders("*") // Permite todos los encabezados
+            .allowCredentials(true) // Permite cookies y credenciales
     }
 }

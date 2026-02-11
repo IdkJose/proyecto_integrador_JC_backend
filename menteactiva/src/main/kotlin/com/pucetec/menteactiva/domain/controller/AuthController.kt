@@ -12,16 +12,19 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/auth")
 class AuthController(private val userService: UserService) {
 
+    // Endpoint para registro de nuevos usuarios
     @PostMapping("/register")
     fun register(@Valid @RequestBody request: RegisterRequest): ResponseEntity<UserResponse> {
         return ResponseEntity.ok(userService.register(request))
     }
 
+    // Endpoint para inicio de sesión
     @PostMapping("/login")
     fun login(@Valid @RequestBody request: LoginRequest): ResponseEntity<UserResponse> {
         return ResponseEntity.ok(userService.login(request))
     }
 
+    // Endpoint para actualizar nombre de usuario
     @PutMapping("/update/{id}")
     fun updateUser(@PathVariable id: Long, @Valid @RequestBody request: com.pucetec.menteactiva.domain.dto.UpdateUserRequest): ResponseEntity<UserResponse> {
         return ResponseEntity.ok(userService.updateUser(id, request))
