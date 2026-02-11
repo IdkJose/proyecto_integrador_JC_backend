@@ -35,7 +35,7 @@ class UserService(private val userRepository: UserRepository) {
         
         // 4. Guardar en Base de Datos
         val savedUser = userRepository.save(newUser)
-        return UserResponse(savedUser.id, savedUser.email, savedUser.displayName)
+        return UserResponse(savedUser.id, savedUser.email, savedUser.displayName, savedUser.goal, savedUser.reminderTime, savedUser.notificationsEnabled)
     }
 
     fun login(request: LoginRequest): UserResponse {
@@ -48,7 +48,8 @@ class UserService(private val userRepository: UserRepository) {
             throw IllegalArgumentException("Credenciales invalidas")
         }
 
-        return UserResponse(user.id, user.email, user.displayName)
+        // Devolvemos las preferencias guardadas en BD para que el frontend las aplique
+        return UserResponse(user.id, user.email, user.displayName, user.goal, user.reminderTime, user.notificationsEnabled)
     }
 
     @Transactional
@@ -57,10 +58,13 @@ class UserService(private val userRepository: UserRepository) {
             .orElseThrow { IllegalArgumentException("Usuario no encontrado") }
 
         // Modificamos directamente la entidad gestionada por JPA
-        user.displayName = request.displayName 
+        user.displayName = request.displayName
+        user.goal = request.goal
+        user.reminderTime = request.reminderTime
+        user.notificationsEnabled = request.notificationsEnabled
         
         // Al terminar la transacción, JPA detecta el cambio y hace el UPDATE automáticamente
         val savedUser = userRepository.save(user)
-        return UserResponse(savedUser.id, savedUser.email, savedUser.displayName)
+        return UserResponse(savedUser.id, savedUser.email, savedUser.displayName, savedUser.goal, savedUser.reminderTime, savedUser.notificationsEnabled)
     }
 }

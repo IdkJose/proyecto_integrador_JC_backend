@@ -90,15 +90,43 @@ data class RegisterRequest(
     val displayName: String
 )
 
-// Usado para endpoints que solo actualizan el perfil
+// Usado para endpoints que solo actualizan el perfil (ahora incluye preferencias)
 data class UpdateUserRequest(
     @field:NotBlank(message = "Name is required")
-    val displayName: String
+    val displayName: String,
+    val goal: String? = null,
+    val reminderTime: String? = "20:00",
+    val notificationsEnabled: Boolean = true
 )
 
 // Lo que enviamos de vuelta al frontend (nunca devolver la contraseña)
 data class UserResponse(
     val id: Long,
     val email: String,
-    val displayName: String
+    val displayName: String,
+    val goal: String? = null,
+    val reminderTime: String? = "20:00",
+    val notificationsEnabled: Boolean = true
+)
+
+// --- MoodEntry DTOs (Registros de estado de ánimo) ---
+// Datos que el frontend envía para crear un nuevo check-in
+data class CreateMoodEntryRequest(
+    @field:NotBlank(message = "Mood ID is required")
+    val moodId: String,
+
+    @field:NotBlank(message = "Label is required")
+    val label: String,
+
+    val note: String? = null
+)
+
+// Datos que devolvemos al frontend (incluye ID, userId y fecha)
+data class MoodEntryResponse(
+    val id: Long,
+    val userId: Long,
+    val moodId: String,
+    val label: String,
+    val note: String?,
+    val createdAt: String
 )

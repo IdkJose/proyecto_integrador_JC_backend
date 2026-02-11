@@ -23,7 +23,17 @@ class User(
 
     @field:NotBlank(message = "El nombre es requerido")
     @Column(name = "display_name", nullable = false)
-    var displayName: String = ""
+    var displayName: String = "",
+
+    // Campos de preferencias sincronizadas con el frontend
+    @Column(name = "goal")
+    var goal: String? = null, // estres, concentracion, animo, suenio
+
+    @Column(name = "reminder_time")
+    var reminderTime: String? = "20:00",
+
+    @Column(name = "notifications_enabled")
+    var notificationsEnabled: Boolean = true
 ) {
     // Implementación correcta de equals y hashCode para entidades JPA
     override fun equals(other: Any?): Boolean {
