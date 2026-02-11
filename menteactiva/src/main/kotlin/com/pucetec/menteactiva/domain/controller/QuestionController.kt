@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/questions")
-@CrossOrigin(origins = ["*"])
+
 class QuestionController(
     private val questionService: QuestionService
 ) {

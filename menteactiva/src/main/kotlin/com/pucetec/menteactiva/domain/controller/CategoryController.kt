@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/categories")
-@CrossOrigin(origins = ["*"]) // Allow generic access for simplicity in demo
+
 class CategoryController(
     private val categoryService: CategoryService
 ) {

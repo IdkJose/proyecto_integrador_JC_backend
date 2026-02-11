@@ -24,6 +24,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web") // Web completo (no solo mvc)
 	implementation("org.springframework.boot:spring-boot-starter-validation") // Validaciones
+	implementation("org.springframework.security:spring-security-crypto") // Hashing de contraseñas
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	runtimeOnly("org.postgresql:postgresql") // DB Externa real

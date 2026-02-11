@@ -8,18 +8,25 @@ import com.pucetec.menteactiva.domain.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+
 @Service
 class UserService(private val userRepository: UserRepository) {
 
+    private val passwordEncoder = BCryptPasswordEncoder()
+
     @Transactional
     fun register(request: RegisterRequest): UserResponse {
+        if (!request.email.endsWith("@puce.edu.ec")) {
+            throw IllegalArgumentException("El correo debe ser institucional (@puce.edu.ec)")
+        }
         if (userRepository.findByEmail(request.email).isPresent) {
             throw IllegalArgumentException("El email ya esta registrado")
         }
 
         val newUser = User(
             email = request.email,
-            password = request.password, // NOTA: En producción, usar BCryptEncoder
+            password = passwordEncoder.encode(request.password), // Hashing activo
             displayName = request.displayName
         )
         val savedUser = userRepository.save(newUser)
@@ -30,7 +37,7 @@ class UserService(private val userRepository: UserRepository) {
         val user = userRepository.findByEmail(request.email)
             .orElseThrow { IllegalArgumentException("Credenciales invalidas") }
 
-        if (user.password != request.password) { 
+        if (!passwordEncoder.matches(request.password, user.password)) { 
             throw IllegalArgumentException("Credenciales invalidas")
         }
 
@@ -42,8 +49,8 @@ class UserService(private val userRepository: UserRepository) {
         val user = userRepository.findById(id)
             .orElseThrow { IllegalArgumentException("Usuario no encontrado") }
 
-        val updatedUser = user.copy(displayName = request.displayName)
-        val savedUser = userRepository.save(updatedUser)
+        user.displayName = request.displayName // Modificación directa
+        val savedUser = userRepository.save(user)
         return UserResponse(savedUser.id, savedUser.email, savedUser.displayName)
     }
 }
