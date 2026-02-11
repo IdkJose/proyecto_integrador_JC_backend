@@ -85,7 +85,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"displayName\": \"Updated User Name\"\n}"
+							"raw": "{\n    \"displayName\": \"Updated User Name\",\n    \"goal\": \"concentracion\",\n    \"reminderTime\": \"20:00\",\n    \"notificationsEnabled\": true\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/v1/auth/update/1",
@@ -416,6 +416,88 @@
 								"api",
 								"v1",
 								"questions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mood Entries",
+			"item": [
+				{
+					"name": "Create Mood Entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"moodId\": \"good\",\n    \"label\": \"Bien\",\n    \"note\": \"Me siento tranquilo hoy\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/mood-entries/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"mood-entries",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Mood Entries By User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/mood-entries/user/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"mood-entries",
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Mood Entry",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/mood-entries/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"mood-entries",
 								"1"
 							]
 						}
